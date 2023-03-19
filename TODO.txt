@@ -1,0 +1,4 @@
+TODOS at the moment:
+
+1.Backend -> database Demodaten nach hintergelgter Struktur ändern 
+2. Backend -> index Konsolenausgabe anpassen (Name des Services usw.)

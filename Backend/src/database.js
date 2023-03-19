@@ -37,17 +37,24 @@ class DatabaseFactory {
 
         if (await examples.estimatedDocumentCount() === 0) {
             examples.insertMany([
+                
+                //Für unser Projekt nach folgender Struktur anpassen
                 {
-                    title: "Cloud Native Architecture and Design",
-                    author: "Shivakumar R Goniwada",
-                    publisher: "Apress",
-                    year: 2022,
+                   name:"",
+                   difficulty: "",
+                   time: "",
+                   category: "",
+                   ingredients: "",
+                   description: ""
+
                 },
                 {
-                    title: "Machine Learning Kompakt",
-                    author: "Andriy Burkov",
-                    publisher: "mitp",
-                    year: 2019,
+                    name:"",
+                   difficulty: "",
+                   time: "",
+                   category: "",
+                   ingredients: "",
+                   description: ""
                 },
             ]);
         }

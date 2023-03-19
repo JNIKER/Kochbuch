@@ -4,9 +4,12 @@ import restify from "restify";
 import OpenApiEnforcer from "openapi-enforcer";
 import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-middleware";
 
-//// TODO: Weitere Controller-Klassen importieren ////
+////Done  TODO: Weitere Controller-Klassen importieren ////
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
+import RecipeController from "./controller/Recipe.controller.js";
+import LoginController from "./controller/login.controller.js";
+
 
 // Verzeichnisnamen der Quellcodedatei ermitteln
 import path from "path";
@@ -77,7 +80,7 @@ server.opts("*", (req, res, next) => {
 
 // Anfragen und Antworten gegen die OpenAPI-Spezifikation prüfen und dabei
 // fehlerhafte Anfragen oder Antworten mit einer Exception ablehnen.
-const openApiFile = path.relative("", path.join(__dirname, "api", "openapi.yaml"));
+const openApiFile = path.relative("", path.join(__dirname, "api", "Kochbuch API.yaml"));
 const openApiValidation = await OpenApiEnforcer(openApiFile, {fullResult: true});
 
 const openApiEnforcer = await OpenApiEnforcer(openApiFile, {
@@ -90,8 +93,10 @@ const openApiEnforcer = await OpenApiEnforcer(openApiFile, {
 server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 
 // HTTP-Controller registrieren
-//// TODO: Weitere Controller-Klassen hinzufügen ////
-new RootController(server, "/");
+////DONE  TODO: Weitere Controller-Klassen hinzufügen //// 
+new RootController(server, "/",openApiFile);
+new RecipeController(server, "/Recipe");
+new LoginController(server, "/login");
 
 // Server tatsächlich starten
 server.listen(config.port, config.host, function() {
