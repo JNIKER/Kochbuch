@@ -1,4 +1,31 @@
 TODOS at the moment:
 
+Recipe->Moritz Login->Niklas
+Backend:
 1.Backend -> database Demodaten nach hintergelgter Struktur ändern 
 2. Backend -> index Konsolenausgabe anpassen (Name des Services usw.)
+3. Backend -> package TODO ändern geht schnell
+4. Zu jedem Service einen Controller definieren
+4. Backend ->Controller und Service Ausprogrammieren login und Recipe
+
+Frontend:
+Komplett
+
+
+
+
+
+
+
+
+Wichtig: Grundgerüst einer Single Page App
+
+Hauptarbeit Coden controller/service
+Für jede Entität eine Datei anlegen in Service und Controller
+
+Controller was ist es und mit welchen URL Befehlen
+Service was dann wirklich passieren soll
+
+
+Index startet den webserver, restify implementiert
+Server.get(„/address/:id“, function, die in javascript ausformuliert wird
