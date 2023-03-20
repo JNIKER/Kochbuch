@@ -78,6 +78,8 @@ server.opts("*", (req, res, next) => {
     next();
 });
 
+//Eventuell wieder in openApi ändern
+
 // Anfragen und Antworten gegen die OpenAPI-Spezifikation prüfen und dabei
 // fehlerhafte Anfragen oder Antworten mit einer Exception ablehnen.
 const openApiFile = path.relative("", path.join(__dirname, "api", "Kochbuch API.yaml"));

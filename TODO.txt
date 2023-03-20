@@ -8,6 +8,10 @@ Backend:
 4. Zu jedem Service einen Controller definieren
 4. Backend ->Controller und Service Ausprogrammieren login und Recipe
 
+Stefan meint, einfach aus alter datei kopieren und einfügen alles daraus ändern
+
+Eventuell kann uns die Namensänderung von openApi zu Kochbuch Api alles zerschiesen. Eventuell wieder ändern.
+
 Frontend:
 Komplett
 
