@@ -15,6 +15,7 @@ Eventuell kann uns die Namensänderung von openApi zu Kochbuch Api alles zerschi
 Frontend:
 Komplett
 
+eine eigene Routingregel
 
 
 
