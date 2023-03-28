@@ -13,7 +13,7 @@ export default class LoginService {
      * Konstruktor.
      */
     constructor() {
-        this._addresses = DatabaseFactory.database.collection("addresses");
+        this._logines = DatabaseFactory.database.collection("login");
     }
 
     /**
@@ -26,10 +26,11 @@ export default class LoginService {
      * @return {Promise} Liste der gefundenen Adressen
      */
     async search(query) {
-        let cursor = this._addresses.find(query, {
+        let cursor = this._login.find(query, {
             sort: {
-                first_name: 1,
-                last_name: 1,
+                username: 1,
+                email: 1,
+                password: 1,
             }
         });
 
@@ -39,21 +40,20 @@ export default class LoginService {
     /**
      * Speichern einer neuen Adresse.
      *
-     * @param {Object} address Zu speichernde Adressdaten
+     * @param {Object} login Zu speichernde Adressdaten
      * @return {Promise} Gespeicherte Adressdaten
      */
-    async create(address) {
-        address = address || {};
+    async create(login) {
+        login = login || {};
 
-        let newAddress = {
-            first_name: address.first_name || "",
-            last_name:  address.last_name  || "",
-            phone:      address.phone      || "",
-            email:      address.email      || "",
+        let newlogin = {
+            username: login.username || "",
+            email: login.email  || "",
+            password: login.password      || "",
         };
 
-        let result = await this._addresses.insertOne(newAddress);
-        return await this._addresses.findOne({_id: result.insertedId});
+        let result = await this._logines.insertOne(newlogin);
+        return await this._login.findOne({_id: result.insertedId});
     }
 
     /**
@@ -63,7 +63,7 @@ export default class LoginService {
      * @return {Promise} Gefundene Adressdaten
      */
     async read(id) {
-        let result = await this._addresses.findOne({_id: new ObjectId(id)});
+        let result = await this._login.findOne({_id: new ObjectId(id)});
         return result;
     }
 
@@ -72,24 +72,23 @@ export default class LoginService {
      * oder des gesamten Adressobjekts (ohne die ID).
      *
      * @param {String} id ID der gesuchten Adresse
-     * @param {[type]} address Zu speichernde Adressdaten
+     * @param {[type]} login Zu speichernde Adressdaten
      * @return {Promise} Gespeicherte Adressdaten oder undefined
      */
-    async update(id, address) {
-        let oldAddress = await this._addresses.findOne({_id: new ObjectId(id)});
-        if (!oldAddress) return;
+    async update(id, login) {
+        let oldlogin = await this._login.findOne({_id: new ObjectId(id)});
+        if (!oldlogin) return;
 
         let updateDoc = {
             $set: {},
         }
 
-        if (address.first_name) updateDoc.$set.first_name = address.first_name;
-        if (address.last_name)  updateDoc.$set.last_name  = address.last_name;
-        if (address.phone)      updateDoc.$set.phone      = address.phone;
-        if (address.email)      updateDoc.$set.email      = address.email;
+        if (login.username) updateDoc.$set.username = login.username;
+        if (login.email)  updateDoc.$set.email  = login.email;
+        if (login.password)      updateDoc.$set.password      = login.password;
 
-        await this._addresses.updateOne({_id: new ObjectId(id)}, updateDoc);
-        return this._addresses.findOne({_id: new ObjectId(id)});
+        await this._login.updateOne({_id: new ObjectId(id)}, updateDoc);
+        return this._login.findOne({_id: new ObjectId(id)});
     }
 
     /**
@@ -99,7 +98,7 @@ export default class LoginService {
      * @return {Promise} Anzahl der gelöschten Datensätze
      */
     async delete(id) {
-        let result = await this._addresses.deleteOne({_id: new ObjectId(id)});
+        let result = await this._login.deleteOne({_id: new ObjectId(id)});
         return result.deletedCount;
     }
 }
