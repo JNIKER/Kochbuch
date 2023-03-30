@@ -24,13 +24,13 @@ class App {
         //// TODO: Routing-Regeln anpassen und ggf. neue Methoden anlegen ////
         this.router = new Router([
             {
-                url: "^/$",
-                show: () => this._gotoList()
+                url: "^/$login",
+                show: () => this._gotoListLogin()
             },
             //// TODO: Eigene Routing-Regeln hier in der Mitte einfügen ////
             {
-                url: ".*",
-                show: () => this._gotoList()
+                url: ".*login",
+                show: () => this._gotoListLogin()
             },
         ]);
 
@@ -61,10 +61,10 @@ class App {
     /**
      * Übersichtsseite anzeigen. Wird vom Single Page Router aufgerufen.
      */
-    async _gotoList() {
+    async _gotoListLogin() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageList} = await import("./page-list/page-list.js");
+            let {default: PageList} = await import("./page-list/page-list-login.js");
 
             let page = new PageList(this);
             await page.init();
