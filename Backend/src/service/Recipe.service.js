@@ -1,110 +1,117 @@
-"use strict";
+"use strict"
 
-import Page from "../page.js";
-import HtmlTemplate from "./page-list.html";
+import DatabaseFactory from "../database.js";
+import {ObjectId} from "mongodb";
 
 /**
- * Klasse PageList: Stellt die Listenübersicht zur Verfügung
+ * Geschäftslogik zur Verwaltung von Adressen. Diese Klasse implementiert die
+ * eigentliche Anwendungslogik losgelöst vom technischen Übertragungsweg.
+ * Die Adressen werden der Einfachheit halber in einer MongoDB abgelegt.
  */
-export default class PageList extends Page {
+export default class RecipeService {
     /**
      * Konstruktor.
-     *
-     * @param {App} app Instanz der App-Klasse
      */
-    constructor(app) {
-        super(app, HtmlTemplate);
-
-        this._emptyMessageElement = null;
+    constructor() {
+        this._Recipe = DatabaseFactory.database.collection("Recipe");
     }
 
     /**
-     * HTML-Inhalt und anzuzeigende Daten laden.
+     * Rezepte suchen. Unterstützt wird lediglich eine ganz einfache Suche,
+     * bei der einzelne Felder auf exakte Übereinstimmung geprüft werden.
+     * Zwar unterstützt MongoDB prinzipiell beliebig komplexe Suchanfragen.
+     * Um das Beispiel klein zu halten, wird dies hier aber nicht unterstützt.
      *
-     * HINWEIS: Durch die geerbte init()-Methode wird `this._mainElement` mit
-     * dem <main>-Element aus der nachgeladenen HTML-Datei versorgt. Dieses
-     * Element wird dann auch von der App-Klasse verwendet, um die Seite
-     * anzuzeigen. Hier muss daher einfach mit dem üblichen DOM-Methoden
-     * `this._mainElement` nachbearbeitet werden, um die angezeigten Inhalte
-     * zu beeinflussen.
-     *
-     * HINWEIS: In dieser Version der App wird mit dem üblichen DOM-Methoden
-     * gearbeitet, um den finalen HTML-Code der Seite zu generieren. In größeren
-     * Apps würde man ggf. eine Template Engine wie z.B. Nunjucks integrieren
-     * und den JavaScript-Code dadurch deutlich vereinfachen.
+     * @param {Object} query Optionale Suchparameter
+     * @return {Promise} Liste der gefundenen Adressen
      */
-    async init() {
-        // HTML-Inhalt nachladen
-        await super.init();
-        this._title = "Übersicht";
+    async search(query) {
+        let cursor = this._Recipe.find(query, {
+            sort: {
+                name: 1,
+                difficulty: 1,
+                time: 1,
+                serves: 1,
+                category: 1,
+                ingredients: 1,
+                description: 1,
+            }
+        });
 
-        // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
-        let data = await this._app.backend.fetch("GET", "/Recipe");
-        this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
-
-        if (data.length) {
-            this._emptyMessageElement.classList.add("hidden");
-        }
-
-        // Je Datensatz einen Listeneintrag generieren
-        let olElement = this._mainElement.querySelector("ol");
-
-        let templateElement = this._mainElement.querySelector(".list-entry");
-        let templateHtml = templateElement.outerHTML;
-        templateElement.remove();
-
-        for (let index in data) {
-            // Platzhalter ersetzen
-            let dataset = data[index];
-            let html = templateHtml;
-
-            html = html.replace("$NAME$", dataset.name);
-            html = html.replace("$DIFFICUlTY$", dataset.difficulty);
-            html = html.replace("$TIME$", dataset.time);
-            html = html.replace("$SERVES$", dataset.serves);
-            html = html.replace("$CATEGORY$", dataset.category);
-            html = html.replace("$INGREDIENTS$", dataset.ingredients);
-            html = html.replace("$DESCRIPTION$", dataset.description);
-            
-            // Element in die Liste einfügen
-            let dummyElement = document.createElement("div");
-            dummyElement.innerHTML = html;
-            let liElement = dummyElement.firstElementChild;
-            liElement.remove();
-            olElement.appendChild(liElement);
-
-            // Event Handler registrieren
-            liElement.querySelector(".action.edit").addEventListener("click", () => location.hash = `#/edit/${dataset._id}`);
-            liElement.querySelector(".action.delete").addEventListener("click", () => this._askDelete(dataset._id));
-        }
+        return cursor.toArray();
     }
 
     /**
-     * Löschen der übergebenen Adresse. Zeigt einen Popup, ob der Anwender
-     * die Adresse löschen will und löscht diese dann.
+     * Speichern eines neuen Rezeptes.
      *
-     * @param {Integer} id ID des zu löschenden Datensatzes
+     * @param {Object} Recipe Zu speichernde Rezeptdaten
+     * @return {Promise} Gespeicherte Rezeptdaten
      */
-    async _askDelete(id) {
-        // Sicherheitsfrage zeigen
-        let answer = confirm("Soll die ausgewählte User wirklich gelöscht werden?");
-        if (!answer) return;
+    async create(Recipe) {
+        Recipe = Recipe || {};
 
-        // Datensatz löschen
-        try {
-            this._app.backend.fetch("DELETE", `/address/${id}`);
-        } catch (ex) {
-            this._app.showException(ex);
-            return;
-        }
+        let newRecipe = {
+            name: Recipe.name || "",
+            difficulty: Recipe.difficulty  || "",
+            time: Recipe.time      || "",
+            serves: Recipe.serves      || "",
+            category: Recipe.category      || "",
+            ingredients: Recipe.ingredients      || "",
+            description: Recipe.description      || "",
+        };
 
-        // HTML-Element entfernen
-        this._mainElement.querySelector(`[data-id="${id}"]`)?.remove();
-
-        if (this._mainElement.querySelector("[data-id]")) {
-            this._emptyMessageElement.classList.add("hidden");
-        } else {
-            this._emptyMessageElement.classList.remove("hidden");
-        }
+        let result = await this._Recipe.insertOne(newRecipe);
+        return await this._Recipe.findOne({_id: result.insertedId});
     }
-};
+
+    /**
+     * Auslesen einer vorhandenen Adresse anhand ihrer ID.
+     *
+     * @param {String} id ID der gesuchten Adresse
+     * @return {Promise} Gefundene Adressdaten
+     */
+    async read(id) {
+        let result = await this._Recipe.findOne({_id: new ObjectId(id)});
+        return result;
+    }
+
+    /**
+     * Aktualisierung einer Adresse, durch Überschreiben einzelner Felder
+     * oder des gesamten Adressobjekts (ohne die ID).
+     *
+     * @param {String} id ID der gesuchten Adresse
+     * @param {[type]} Recipe Zu speichernde Adressdaten
+     * @return {Promise} Gespeicherte Adressdaten oder undefined
+     */
+    async update(id, Recipe) {
+        let oldRecipe = await this._Recipe.findOne({_id: new ObjectId(id)});
+        if (!oldRecipe) return;
+
+        let updateDoc = {
+            $set: {},
+        }
+
+        if (Recipe.name)        updateDoc.$set.name = Recipe.name;
+        if (Recipe.difficulty)  updateDoc.$set.difficulty = Recipe.difficulty;
+        if (Recipe.time)        updateDoc.$set.time = Recipe.time;
+        if (Recipe.serves)      updateDoc.$set.serves = Recipe.serves;
+        if (Recipe.category)    updateDoc.$set.category = Recipe.category;
+        if (Recipe.ingredients) updateDoc.$set.ingredients = Recipe.ingredients;
+        if (Recipe.description) updateDoc.$set.description = Recipe.description;
+
+
+        await this._Recipe.updateOne({_id: new ObjectId(id)}, updateDoc);
+        return this._Recipe.findOne({_id: new ObjectId(id)});
+    }
+
+    /**
+     * Löschen einer Adresse anhand ihrer ID.
+     *
+     * @param {String} id ID der gesuchten Adresse
+     * @return {Promise} Anzahl der gelöschten Datensätze
+     */
+    async delete(id) {
+        let result = await this._Recipe.deleteOne({_id: new ObjectId(id)});
+        return result.deletedCount;
+    }
+}

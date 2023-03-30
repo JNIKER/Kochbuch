@@ -1,7 +1,7 @@
 "use strict";
 
 import Page from "../page.js";
-import HtmlTemplate from "./page-list.html";
+import HtmlTemplate from "./page-list-Recipe.html";
 
 /**
  * Klasse PageList: Stellt die Listenübersicht zur Verfügung
@@ -36,10 +36,10 @@ export default class PageList extends Page {
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        this._title = "Übersicht";
+        this._title = "Übersicht Rezepte";
 
         // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
-        let data = await this._app.backend.fetch("GET", "/login");
+        let data = await this._app.backend.fetch("GET", "/Recipe");
         this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
 
         if (data.length) {
@@ -58,10 +58,13 @@ export default class PageList extends Page {
             let dataset = data[index];
             let html = templateHtml;
 
-            html = html.replace("$ID$", dataset._id);
-            html = html.replace("$USERNAME$", dataset.username);
-            html = html.replace("$EMAIL$", dataset.email);
-            html = html.replace("$PASSWORD$", dataset.password);
+            html = html.replace("$NAME$", dataset.name);
+            html = html.replace("$DIFFICUlTY$", dataset.difficulty);
+            html = html.replace("$TIME$", dataset.time);
+            html = html.replace("$SERVES$", dataset.serves);
+            html = html.replace("$CATEGORY$", dataset.category);
+            html = html.replace("$INGREDIENTS$", dataset.ingredients);
+            html = html.replace("$DESCRIPTION$", dataset.description);
             
             // Element in die Liste einfügen
             let dummyElement = document.createElement("div");
