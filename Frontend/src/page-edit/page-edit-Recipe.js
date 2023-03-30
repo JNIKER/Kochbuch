@@ -21,17 +21,23 @@ export default class PageEdit extends Page {
         this._editId = editId;
 
         this._dataset = {
-            first_name: "",
-            last_name: "",
-            phone: "",
-            email: "",
+            name: "",
+            difficulty: "",
+            time: "",
+            serves: "",
+            category: "",
+            ingredients: "",
+            description: "",
         };
 
         // Eingabefelder
-        this._firstNameInput = null;
-        this._lastNameInput  = null;
-        this._phoneInput     = null;
-        this._emailInput     = null;
+        this._nameInput         = null;
+        this._difficultyInput   = null;
+        this._timeInput         = null;
+        this._servesInput       = null;
+        this._categoryInput     = null;
+        this._ingredientsInput  = null;
+        this._descriptionInput  = null;
     }
 
     /**
@@ -55,20 +61,22 @@ export default class PageEdit extends Page {
 
         // Bearbeiteten Datensatz laden
         if (this._editId) {
-            this._url = `/address/${this._editId}`;
+            this._url = `/Recipe/${this._editId}`;
             this._dataset = await this._app.backend.fetch("GET", this._url);
-            this._title = `${this._dataset.first_name} ${this._dataset.last_name}`;
+            this._title = `${this._dataset.name}`;
         } else {
-            this._url = `/address`;
-            this._title = "Adresse hinzufügen";
+            this._url = `/Recipe`;
+            this._title = "Rezept hinzufügen";
         }
 
         // Platzhalter im HTML-Code ersetzen
         let html = this._mainElement.innerHTML;
-        html = html.replace("$LAST_NAME$", this._dataset.last_name);
-        html = html.replace("$FIRST_NAME$", this._dataset.first_name);
-        html = html.replace("$PHONE$", this._dataset.phone);
-        html = html.replace("$EMAIL$", this._dataset.email);
+        html = html.replace("$NAME$", this._dataset.name);
+        html = html.replace("$DIFFICULTY$", this._dataset.difficulty);
+        html = html.replace("$TIME$", this._dataset.time);
+        html = html.replace("$SERVES$", this._dataset.serves);
+        html = html.replace("$CATEGORY$", this._dataset.category);
+        html = html.replace("$INGREDIENTS$", this._dataset.ingredients);
         this._mainElement.innerHTML = html;
 
         // Event Listener registrieren
@@ -76,10 +84,12 @@ export default class PageEdit extends Page {
         saveButton.addEventListener("click", () => this._saveAndExit());
 
         // Eingabefelder zur späteren Verwendung merken
-        this._firstNameInput = this._mainElement.querySelector("input.first_name");
-        this._lastNameInput  = this._mainElement.querySelector("input.last_name");
-        this._phoneInput     = this._mainElement.querySelector("input.phone");
-        this._emailInput     = this._mainElement.querySelector("input.email");
+        this._nameInput = this._mainElement.querySelector("input.ame");
+        this._difficuktyInput  = this._mainElement.querySelector("input.difficulty");
+        this._timeInput     = this._mainElement.querySelector("input.time");
+        this._servesInput     = this._mainElement.querySelector("input.serves");
+        this._categoryInput     = this._mainElement.querySelector("input.category");
+        this._ingredientsInput     = this._mainElement.querySelector("input.ingredients");
     }
 
     /**
@@ -89,18 +99,24 @@ export default class PageEdit extends Page {
     async _saveAndExit() {
         // Eingegebene Werte prüfen
         this._dataset._id        = this._editId;
-        this._dataset.first_name = this._firstNameInput.value.trim();
-        this._dataset.last_name  = this._lastNameInput.value.trim();
-        this._dataset.phone      = this._phoneInput.value.trim();
-        this._dataset.email      = this._emailInput.value.trim();
+        this._dataset.name       = this._nameInput.value.trim();
+        this._dataset.difficulty  = this._difficultyInput.value.trim();
+        this._dataset.time      = this._timeInput.value.trim();
+        this._dataset.serves      = this._servesInput.value.trim();
+        this._dataset.category     = this._categoryInput.value.trim();
+        this._dataset.ingredients     = this._ingredientsInput.value.trim();
+        this._dataset.description     = this._descriptionInput.value.trim();
 
-        if (!this._dataset.first_name) {
-            alert("Geben Sie erst einen Vornamen ein.");
+
+
+        // es soll mindestens der Name des Gerichts und die Zutaten eingegeben werden
+        if (!this._dataset.name) {
+            alert("Benenne Sie erst das Rezept.");
             return;
         }
 
-        if (!this._dataset.last_name) {
-            alert("Geben Sie erst einen Nachnamen ein.");
+        if (!this._dataset.ingredients) {
+            alert("Bitte geben Sie erst die Zutaten an.");
             return;
         }
 
