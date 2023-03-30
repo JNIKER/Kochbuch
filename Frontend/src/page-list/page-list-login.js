@@ -1,7 +1,7 @@
 "use strict";
 
 import Page from "../page.js";
-import HtmlTemplate from "./page-list.html";
+import HtmlTemplate from "./page-list-login.html";
 
 /**
  * Klasse PageList: Stellt die Listenübersicht zur Verfügung
