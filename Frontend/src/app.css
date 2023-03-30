@@ -30,7 +30,7 @@ html {
 @media (min-width: 40em) {
     html {
         /* http://bg.siteorigin.com/ */
-        background-color: #669ac4;
+        background-color: #ffffff;
         background-image: url(img/background.png);
         -webkit-background-size: cover;
         -moz-background-size: cover;
