@@ -61,6 +61,7 @@ export default class PageList extends Page {
             html = html.replace("$NAME$", dataset.name);
             html = html.replace("$DIFFICUlTY$", dataset.difficulty);
             html = html.replace("$TIME$", dataset.time);
+            html = html.replace("$SERVES$", dataset.serves);
             html = html.replace("$CATEGORY$", dataset.category);
             html = html.replace("$INGREDIENTS$", dataset.ingredients);
             html = html.replace("$DESCRIPTION$", dataset.description);

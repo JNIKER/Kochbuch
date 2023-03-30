@@ -20,11 +20,11 @@ export default class LoginController {
         this._service = new LoginService();
         this._prefix = prefix;
 
-        // Collection: Adressen
+        // Collection: Benutzer
         server.get(prefix, wrapHandler(this, this.search));
         server.post(prefix, wrapHandler(this, this.create));
 
-        // Entity: Adresse
+        // Entity: Benutzer
         server.get(prefix + "/:id", wrapHandler(this, this.read));
         server.put(prefix + "/:id", wrapHandler(this, this.update));
         server.patch(prefix + "/:id", wrapHandler(this, this.update));
@@ -52,7 +52,7 @@ export default class LoginController {
 
     /**
      * GET /login
-     * Adressen suchen
+     * Benutzer suchen
      */
     async search(req, res, next) {
         let result = await this._service.search(req.query);
@@ -63,7 +63,7 @@ export default class LoginController {
 
     /**
      * POST /login
-     * Neue Adresse anlegen
+     * Neuen Benutzer anlegen
      */
     async create(req, res, next) {
         let result = await this._service.create(req.body);
@@ -78,7 +78,7 @@ export default class LoginController {
 
     /**
      * GET /login/:id
-     * Adresse auslesen
+     * Benutzer auslesen
      */
     async read(req, res, next) {
         let result = await this._service.read(req.params.id);
@@ -96,7 +96,7 @@ export default class LoginController {
     /**
      * PUT /login/:id
      * PATCH /login/:id
-     * Adresse ändern
+     * Benutzer ändern
      */
     async update(req, res, next) {
         let result = await this._service.update(req.params.id, req.body);
@@ -113,7 +113,7 @@ export default class LoginController {
 
     /**
      * DELETE /login/:id
-     * Adresse löschen
+     * Benutzer löschen
      */
     async delete(req, res, next) {
         await this._service.delete(req.params.id)
