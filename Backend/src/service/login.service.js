@@ -13,7 +13,7 @@ export default class LoginService {
      * Konstruktor.
      */
     constructor() {
-        this._logines = DatabaseFactory.database.collection("login");
+        this._login = DatabaseFactory.database.collection("login");
     }
 
     /**
@@ -52,7 +52,7 @@ export default class LoginService {
             password: login.password      || "",
         };
 
-        let result = await this._logines.insertOne(newlogin);
+        let result = await this._login.insertOne(newlogin);
         return await this._login.findOne({_id: result.insertedId});
     }
 

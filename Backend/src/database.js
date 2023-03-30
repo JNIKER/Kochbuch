@@ -43,6 +43,7 @@ class DatabaseFactory {
                    name:"",
                    difficulty: "",
                    time: "",
+                   serves: "",
                    category: "",
                    ingredients: "",
                    description: ""
@@ -52,6 +53,7 @@ class DatabaseFactory {
                     name:"",
                    difficulty: "",
                    time: "",
+                   serves: "",
                    category: "",
                    ingredients: "",
                    description: ""
