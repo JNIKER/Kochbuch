@@ -1,343 +1,375 @@
----
 openapi: 3.0.2
 info:
-  title: Kochbuch API
-  version: 1.0.0
-  description: |-
-    Die Kochbuch API ist eine RESTful API, die zwei Microservices bereitstellt, um eine 2-Page-App für die Verwaltung von Kochrezepten zu unterstützen. Der erste Microservice bietet Funktionen zur Verwaltung von Benutzerkonten, einschließlich der Registrierung, Authentifizierung und Autorisierung von Benutzern. Der zweite Microservice verwaltet Kochrezepte und bietet Funktionen zum Erstellen, Bearbeiten, Löschen und Anzeigen von Rezepten.
+    title: Kochbuch API
+    version: 1.0.0
+    description: >-
+        Die Kochbuch API ist eine RESTful API, die zwei Microservices bereitstellt, um eine 2-Page-App für die
+        Verwaltung von Kochrezepten zu unterstützen. Der erste Microservice bietet Funktionen zur Verwaltung
+        von Benutzerkonten, einschließlich der Registrierung, Authentifizierung und Autorisierung von
+        Benutzern. Der zweite Microservice verwaltet Kochrezepte und bietet Funktionen zum Erstellen,
+        Bearbeiten, Löschen und Anzeigen von Rezepten.
 
-    Die API bietet eine Reihe von Endpunkten, die es der 2-Page-App ermöglichen, auf die Funktionen der beiden Microservices zuzugreifen. Die Endpunkte für den Benutzerservice umfassen die Registrierung eines neuen Benutzers, die Anmeldung eines bestehenden Benutzers, die Rückgabe von Benutzerinformationen und die Verwaltung von Berechtigungen.
-  contact:
-    name: "Moritz Rau, Jan-Niklas Erdmann"
-    email: moritz_rau@web.de
-  license:
-    name: The Unlicense
-    url: http://unlicense.org
+
+        Die API bietet eine Reihe von Endpunkten, die es der 2-Page-App ermöglichen, auf die Funktionen der
+        beiden Microservices zuzugreifen. Die Endpunkte für den Benutzerservice umfassen die Registrierung
+        eines neuen Benutzers, die Anmeldung eines bestehenden Benutzers, die Rückgabe von
+        Benutzerinformationen und die Verwaltung von Berechtigungen.
+    contact:
+        name: 'Moritz Rau, Jan-Niklas Erdmann'
+        email: moritz_rau@web.de
+    license:
+        name: The Unlicense
+        url: 'http://unlicense.org'
 paths:
-  /recipe:
-    summary: Path used to manage the list of recipes.
-    description: "The REST endpoint/path used to list and create zero or more `Recipe`\
-      \ entities.  This path contains a `GET` and `POST` operation to perform the\
-      \ list and create tasks, respectively."
-    get:
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Recipe'
-          description: Successful response - returns an array of `Recipe` entities.
-      operationId: getRecipes
-      summary: List All Recipes
-      description: Gets a list of all `Recipe` entities.
-    post:
-      requestBody:
-        description: A new `Recipe` to be created.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Recipe'
-        required: true
-      responses:
-        "201":
-          description: Successful response.
-      operationId: createRecipe
-      summary: Create a Recipe
-      description: Creates a new instance of a `Recipe`.
-    parameters:
-    - name: name
-      description: Name des Rezepts
-      schema:
-        type: string
-      in: query
-    - name: difficulty
-      description: Schwierigkeitsgrad
-      schema:
-        type: string
-      in: query
-    - name: time
-      description: Dauer
-      schema:
-        type: string
-      in: query
-    - name: category
-      description: Kategorie des Rezepts
-      schema:
-        type: string
-      in: query
-    - name: ingredients
-      description: Zutaten
-      schema:
-        type: string
-      in: query
-    - name: description
-      description: Beschreibung
-      schema:
-        type: string
-      in: query
-  /recipe/{recipeId}:
-    summary: Path used to manage a single Recipe.
-    description: "The REST endpoint/path used to get, update, and delete single instances\
-      \ of an `Recipe`.  This path contains `GET`, `PUT`, and `DELETE` operations\
-      \ used to perform the get, update, and delete tasks, respectively."
-    get:
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Recipe'
-          description: Successful response - returns a single `Recipe`.
-      operationId: getRecipe
-      summary: Get a Recipe
-      description: Gets the details of a single instance of a `Recipe`.
-    put:
-      requestBody:
-        description: Updated `Recipe` information.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Recipe'
-        required: true
-      responses:
-        "202":
-          description: Successful response.
-      operationId: updateRecipe
-      summary: Update a Recipe
-      description: Updates an existing `Recipe`.
-    delete:
-      responses:
-        "204":
-          description: Successful response.
-      operationId: deleteRecipe
-      summary: Delete a Recipe
-      description: Deletes an existing `Recipe`.
-    patch:
-      requestBody:
-        description: zu ändernde Felder
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Recipe'
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Recipe'
-          description: OK
-    parameters:
-    - name: recipeId
-      description: A unique identifier for a `Recipe`.
-      schema:
-        type: string
-      in: path
-      required: true
-  /login:
-    summary: Path used to manage the list of logins.
-    description: "The REST endpoint/path used to list and create zero or more `login`\
-      \ entities.  This path contains a `GET` and `POST` operation to perform the\
-      \ list and create tasks, respectively."
-    get:
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/login'
-          description: Successful response - returns an array of `login` entities.
-      operationId: getlogins
-      summary: List All logins
-      description: Gets a list of all `login` entities.
-    post:
-      requestBody:
-        description: A new `login` to be created.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/login'
-        required: true
-      responses:
-        "201":
-          description: Successful response.
-      operationId: createlogin
-      summary: Create a login
-      description: Creates a new instance of a `login`.
-    parameters:
-    - name: username
-      description: Benutzername
-      schema:
-        type: string
-      in: query
-    - name: emai
-      description: Email-Adresse
-      schema:
-        type: string
-      in: query
-    - name: password
-      description: Passwort
-      schema:
-        type: string
-      in: query
-  /login/{loginId}:
-    summary: Path used to manage a single login.
-    description: "The REST endpoint/path used to get, update, and delete single instances\
-      \ of an `login`.  This path contains `GET`, `PUT`, and `DELETE` operations used\
-      \ to perform the get, update, and delete tasks, respectively."
-    get:
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/login'
-          description: Successful response - returns a single `login`.
-      operationId: getlogin
-      summary: Get a login
-      description: Gets the details of a single instance of a `login`.
-    put:
-      requestBody:
-        description: Updated `login` information.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/login'
-        required: true
-      responses:
-        "202":
-          description: Successful response.
-      operationId: updatelogin
-      summary: Update a login
-      description: Updates an existing `login`.
-    delete:
-      responses:
-        "204":
-          description: Successful response.
-      operationId: deletelogin
-      summary: Delete a login
-      description: Deletes an existing `login`.
-    parameters:
-    - name: loginId
-      description: A unique identifier for a `login`.
-      schema:
-        type: string
-      in: path
-      required: true
-components:
-  schemas:
-    login:
-      title: Root Type for login
-      description: Login-Vorgang für Verwender des Kochbuchs
-      type: object
-      properties:
-        username:
-          type: string
-        email:
-          type: string
-        password:
-          type: string
-        _links:
-          $ref: '#/components/schemas/HATEOAS_Resource'
-          description: ""
-      example:
-        username: frederike
-        email: mulder@xfiles.com
-        password: Bratwurst123456789$
-    Recipe:
-      title: Root Type for recipe
-      description: "Rezepte, welche die Verwender eintragen"
-      type: object
-      properties:
-        name:
-          type: string
-        difficulty:
-          type: string
-        time:
-          type: string
-        category:
-          type: string
-        ingredients:
-          type: string
-        description:
-          type: string
-        _links:
-          $ref: '#/components/schemas/HATEOAS_Resource'
-          description: ""
-      example:
-        name: Bratwurst mit Kartoffelsalat
-        difficulty: leicht
-        time: 20 Minuten
-        category: Fleisch
-        ingredients: "2 Bratwürste, 5 kartoffeln, 200g Mayo, Priese Pfeffer und Salz,\
-          \ 3 Saure Gürkchen"
-        description: "Die Kartoffeln waschen und in Salzwasser mit dem Kümmel ca.\
-          \ 30 Minuten gar kochen. Anschließend abgießen, schälen, ausdampfen lassen\
-          \ und in Scheiben schneiden. Die Zwiebel schälen und fein würfeln. Mit der\
-          \ Brühe aufkochen lassen. Von der Hitze nehmen, den Essig unterrühren und\
-          \ mit Zucker, Salz und Pfeffer würzen. Die Gurken in kleine Würfel schneiden\
-          \ und zusammen mit dem Dressing über die Kartoffeln geben, locker untermengen\
-          \ und etwa 15 Minuten ziehen lassen."
-    HATEOS_Link:
-      title: Root Type for HATEOS_Link
-      description: HATEOS-Link
-      type: object
-      properties:
-        url:
-          type: string
-        method:
-          type: string
-        query_params:
-          type: array
-          items:
-            type: string
-      example:
-        url: /Recipe
-        method: GET
-        query_params:
-        - name
-        - difficulty
-        - time
-        - ingredients
-        - description
-    HATEOAS_Resource:
-      title: Root Type for HATEOAS_Resource
-      description: HATEOAS-Links einer Resource
-      type: object
-      properties:
-        read:
-          $ref: '#/components/schemas/HATEOS_Link'
-        update:
-          $ref: '#/components/schemas/HATEOS_Link'
-        patch:
-          $ref: '#/components/schemas/HATEOS_Link'
+    /recipe:
+        summary: Path used to manage the list of recipes.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `Recipe` entities.  This path contains
+            a `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Recipe'
+                    description: Successful response - returns an array of `Recipe` entities.
+            operationId: getRecipes
+            summary: List All Recipes
+            description: Gets a list of all `Recipe` entities.
+        post:
+            requestBody:
+                description: A new `Recipe` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Recipe'
+                required: true
+            responses:
+                '201':
+                    description: Successful response.
+            operationId: createRecipe
+            summary: Create a Recipe
+            description: Creates a new instance of a `Recipe`.
+        parameters:
+            -
+                name: name
+                description: Name des Rezepts
+                schema:
+                    type: string
+                in: query
+            -
+                name: difficulty
+                description: Schwierigkeitsgrad
+                schema:
+                    type: string
+                in: query
+            -
+                name: time
+                description: Dauer
+                schema:
+                    type: string
+                in: query
+            -
+                name: category
+                description: Kategorie des Rezepts
+                schema:
+                    type: string
+                in: query
+            -
+                name: ingredients
+                description: Zutaten
+                schema:
+                    type: string
+                in: query
+            -
+                name: description
+                description: Beschreibung
+                schema:
+                    type: string
+                in: query
+            -
+                name: serves
+                description: Portionenanzahl
+                schema:
+                    type: string
+                in: query
+    '/recipe/{recipeId}':
+        summary: Path used to manage a single Recipe.
+        description: >-
+            The REST endpoint/path used to get, update, and delete single instances of an `Recipe`.  This path
+            contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete tasks,
+            respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Recipe'
+                    description: Successful response - returns a single `Recipe`.
+            operationId: getRecipe
+            summary: Get a Recipe
+            description: Gets the details of a single instance of a `Recipe`.
+        put:
+            requestBody:
+                description: Updated `Recipe` information.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Recipe'
+                required: true
+            responses:
+                '202':
+                    description: Successful response.
+            operationId: updateRecipe
+            summary: Update a Recipe
+            description: Updates an existing `Recipe`.
         delete:
-          $ref: '#/components/schemas/HATEOS_Link'
-      example:
-        read: ""
-        update: ""
-        patch: ""
-        delete: ""
-    HATEOAS_Collection:
-      title: Root Type for HATEOAS_Collection
-      description: HATEOAS-Links einer Collection
-      type: object
-      properties:
-        _name:
-          type: string
-        query:
-          $ref: '#/components/schemas/HATEOS_Link'
-        create:
-          $ref: '#/components/schemas/HATEOS_Link'
-      example:
-        _name: Rezepte
-        query: ""
-        create: ""
+            responses:
+                '204':
+                    description: Successful response.
+            operationId: deleteRecipe
+            summary: Delete a Recipe
+            description: Deletes an existing `Recipe`.
+        patch:
+            requestBody:
+                description: zu ändernde Felder
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Recipe'
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Recipe'
+                    description: OK
+        parameters:
+            -
+                name: recipeId
+                description: A unique identifier for a `Recipe`.
+                schema:
+                    type: string
+                in: path
+                required: true
+    /login:
+        summary: Path used to manage the list of logins.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `login` entities.  This path contains
+            a `GET` and `POST` operation to perform the list and create tasks, respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/login'
+                    description: Successful response - returns an array of `login` entities.
+            operationId: getlogins
+            summary: List All logins
+            description: Gets a list of all `login` entities.
+        post:
+            requestBody:
+                description: A new `login` to be created.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/login'
+                required: true
+            responses:
+                '201':
+                    description: Successful response.
+            operationId: createlogin
+            summary: Create a login
+            description: Creates a new instance of a `login`.
+        parameters:
+            -
+                name: username
+                description: Benutzername
+                schema:
+                    type: string
+                in: query
+            -
+                name: emai
+                description: Email-Adresse
+                schema:
+                    type: string
+                in: query
+            -
+                name: password
+                description: Passwort
+                schema:
+                    type: string
+                in: query
+    '/login/{loginId}':
+        summary: Path used to manage a single login.
+        description: >-
+            The REST endpoint/path used to get, update, and delete single instances of an `login`.  This path
+            contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete tasks,
+            respectively.
+        get:
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/login'
+                    description: Successful response - returns a single `login`.
+            operationId: getlogin
+            summary: Get a login
+            description: Gets the details of a single instance of a `login`.
+        put:
+            requestBody:
+                description: Updated `login` information.
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/login'
+                required: true
+            responses:
+                '202':
+                    description: Successful response.
+            operationId: updatelogin
+            summary: Update a login
+            description: Updates an existing `login`.
+        delete:
+            responses:
+                '204':
+                    description: Successful response.
+            operationId: deletelogin
+            summary: Delete a login
+            description: Deletes an existing `login`.
+        parameters:
+            -
+                name: loginId
+                description: A unique identifier for a `login`.
+                schema:
+                    type: string
+                in: path
+                required: true
+components:
+    schemas:
+        login:
+            title: Root Type for login
+            description: Login-Vorgang für Verwender des Kochbuchs
+            type: object
+            properties:
+                username:
+                    type: string
+                email:
+                    type: string
+                password:
+                    type: string
+                _links:
+                    $ref: '#/components/schemas/HATEOAS_Resource'
+                    description: ''
+            example:
+                username: frederike
+                email: mulder@xfiles.com
+                password: Bratwurst123456789$
+        Recipe:
+            title: Root Type for recipe
+            description: 'Rezepte, welche die Verwender eintragen'
+            type: object
+            properties:
+                name:
+                    type: string
+                difficulty:
+                    type: string
+                time:
+                    type: string
+                category:
+                    type: string
+                ingredients:
+                    type: string
+                description:
+                    type: string
+                _links:
+                    $ref: '#/components/schemas/HATEOAS_Resource'
+                    description: ''
+                serves:
+                    description: ''
+                    type: string
+            example:
+                name: Bratwurst mit Kartoffelsalat
+                difficulty: leicht
+                time: 20 Minuten
+                serves: '6'
+                category: Fleisch
+                ingredients: '2 Bratwürste, 5 kartoffeln, 200g Mayo, Priese Pfeffer und Salz, 3 Saure Gürkchen'
+                description: >-
+                    Die Kartoffeln waschen und in Salzwasser mit dem Kümmel ca. 30 Minuten gar kochen.
+                    Anschließend abgießen, schälen, ausdampfen lassen und in Scheiben schneiden. Die Zwiebel
+                    schälen und fein würfeln. Mit der Brühe aufkochen lassen. Von der Hitze nehmen, den Essig
+                    unterrühren und mit Zucker, Salz und Pfeffer würzen. Die Gurken in kleine Würfel schneiden
+                    und zusammen mit dem Dressing über die Kartoffeln geben, locker untermengen und etwa 15
+                    Minuten ziehen lassen.
+        HATEOS_Link:
+            title: Root Type for HATEOS_Link
+            description: HATEOS-Link
+            type: object
+            properties:
+                url:
+                    type: string
+                method:
+                    type: string
+                query_params:
+                    type: array
+                    items:
+                        type: string
+            example:
+                url: /Recipe
+                method: GET
+                query_params:
+                    - name
+                    - difficulty
+                    - time
+                    - serves
+                    - ingredients
+                    - description
+        HATEOAS_Resource:
+            title: Root Type for HATEOAS_Resource
+            description: HATEOAS-Links einer Resource
+            type: object
+            properties:
+                read:
+                    $ref: '#/components/schemas/HATEOS_Link'
+                update:
+                    $ref: '#/components/schemas/HATEOS_Link'
+                patch:
+                    $ref: '#/components/schemas/HATEOS_Link'
+                delete:
+                    $ref: '#/components/schemas/HATEOS_Link'
+            example:
+                read: ''
+                update: ''
+                patch: ''
+                delete: ''
+        HATEOAS_Collection:
+            title: Root Type for HATEOAS_Collection
+            description: HATEOAS-Links einer Collection
+            type: object
+            properties:
+                _name:
+                    type: string
+                query:
+                    $ref: '#/components/schemas/HATEOS_Link'
+                create:
+                    $ref: '#/components/schemas/HATEOS_Link'
+            example:
+                _name: Rezepte
+                query: ''
+                create: ''
 tags:
-- name: Recipe
-  description: Rezepte
-- name: login
-  description: Login der Verwender
+    -
+        name: Recipe
+        description: Rezepte
+    -
+        name: login
+        description: Login der Verwender
