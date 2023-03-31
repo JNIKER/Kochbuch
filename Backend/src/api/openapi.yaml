@@ -1,4 +1,4 @@
-openapi: 3.0.2
+openapi: 3.1.2
 info:
     title: Kochbuch API
     version: 1.0.0
@@ -284,18 +284,19 @@ components:
                     type: string
                 time:
                     type: string
+                serves:
+                    type: string
                 category:
                     type: string
                 ingredients:
                     type: string
                 description:
                     type: string
+                
                 _links:
                     $ref: '#/components/schemas/HATEOAS_Resource'
                     description: ''
-                serves:
-                    description: ''
-                    type: string
+                
             example:
                 name: Bratwurst mit Kartoffelsalat
                 difficulty: leicht

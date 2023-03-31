@@ -24,13 +24,18 @@ class App {
         //// TODO: Routing-Regeln anpassen und ggf. neue Methoden anlegen ////
         this.router = new Router([
             {
-                url: "^/$",
-                show: () => this._gotoList()
+                url: "^/list-recipes$",
+                show: () => this._gotoListRecipe()
+            },{
+                url: "^/edit-recipe/(.*)$",
+                show: matches => this._gotoEditRecipe(matches[1]),
             },
-            //// TODO: Eigene Routing-Regeln hier in der Mitte einfügen ////
             {
-                url: ".*",
-                show: () => this._gotoList()
+                url: "^/list-user$",
+                show: () => this._gotoListUser()
+            },{
+                url: "^/edit-user/(.*)$",
+                show: matches => this._gotoEditUser(matches[1]),
             },
         ]);
 
@@ -58,17 +63,59 @@ class App {
         }
     }
 
+    
+
     /**
      * Übersichtsseite anzeigen. Wird vom Single Page Router aufgerufen.
      */
-    async _gotoList() {
+    async _gotoListUser() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageList} = await import("./page-list/page-list.js");
+            let {default: PageList} = await import("./page-list/page-list-login.js");
 
             let page = new PageList(this);
             await page.init();
-            this._showPage(page, "list");
+            this._showPage(page, "list-user");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+
+
+    async _gotoEditUser(id) {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageEdit} = await import("./page-edit/page-edit-login.js");
+
+            let page = new PageEdit(this, id);
+            await page.init();
+            this._showPage(page, "edit-user");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+
+    async _gotoListRecipe() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageList} = await import("./page-list/page-list-Recipe.js");
+
+            let page = new PageList(this);
+            await page.init();
+            this._showPage(page, "list-recipes");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+
+    async _gotoEditRecipe(id) {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageEdit} = await import("./page-edit/page-edit-Recipe.js");
+
+            let page = new PageEdit(this, id);
+            await page.init();
+            this._showPage(page, "edit-recipe");
         } catch (ex) {
             this.showException(ex);
         }

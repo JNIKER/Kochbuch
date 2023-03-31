@@ -39,7 +39,7 @@ export default class PageList extends Page {
         this._title = "Übersicht Rezepte";
 
         // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
-        let data = await this._app.backend.fetch("GET", "/Recipe");
+        let data = await this._app.backend.fetch("GET", "/recipe");
         this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
 
         if (data.length) {
@@ -57,9 +57,10 @@ export default class PageList extends Page {
             // Platzhalter ersetzen
             let dataset = data[index];
             let html = templateHtml;
-
+            
+            html = html.replace("$ID$", dataset._id);
             html = html.replace("$NAME$", dataset.name);
-            html = html.replace("$DIFFICUlTY$", dataset.difficulty);
+            html = html.replace("$DIFFICULTY$", dataset.difficulty);
             html = html.replace("$TIME$", dataset.time);
             html = html.replace("$SERVES$", dataset.serves);
             html = html.replace("$CATEGORY$", dataset.category);
@@ -74,7 +75,7 @@ export default class PageList extends Page {
             olElement.appendChild(liElement);
 
             // Event Handler registrieren
-            liElement.querySelector(".action.edit").addEventListener("click", () => location.hash = `#/edit/${dataset._id}`);
+            liElement.querySelector(".action.edit").addEventListener("click", () => location.hash = `#/edit-recipe/${dataset._id}`);
             liElement.querySelector(".action.delete").addEventListener("click", () => this._askDelete(dataset._id));
         }
     }
@@ -92,7 +93,7 @@ export default class PageList extends Page {
 
         // Datensatz löschen
         try {
-            this._app.backend.fetch("DELETE", `/address/${id}`);
+            this._app.backend.fetch("DELETE", `/recipe/${id}`);
         } catch (ex) {
             this._app.showException(ex);
             return;

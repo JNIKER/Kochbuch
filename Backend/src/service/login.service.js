@@ -13,7 +13,7 @@ export default class LoginService {
      * Konstruktor.
      */
     constructor() {
-        this._login = DatabaseFactory.database.collection("login");
+        this._login = DatabaseFactory.database.collection("user");
     }
 
     /**

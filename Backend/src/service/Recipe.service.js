@@ -13,7 +13,7 @@ export default class RecipeService {
      * Konstruktor.
      */
     constructor() {
-        this._Recipe = DatabaseFactory.database.collection("Recipe");
+        this._Recipe = DatabaseFactory.database.collection("recipes");
     }
 
     /**
