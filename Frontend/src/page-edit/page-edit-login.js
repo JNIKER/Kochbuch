@@ -22,7 +22,7 @@ export default class PageEdit extends Page {
 
         this._dataset = {
             username: "",
-            password: "",
+            email: "",
             password: "",
         };
 
@@ -113,6 +113,6 @@ export default class PageEdit extends Page {
         }
 
         // Zurück zur Übersicht
-        location.hash = "#/";
+        location.hash = "#/list-user";
     }
 };

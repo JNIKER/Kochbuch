@@ -61,11 +61,11 @@ export default class PageEdit extends Page {
 
         // Bearbeiteten Datensatz laden
         if (this._editId) {
-            this._url = `^/Recipe/edit/(.*)${this._editId}`;
+            this._url = `^/recipe/edit/(.*)${this._editId}`;
             this._dataset = await this._app.backend.fetch("GET", this._url);
             this._title = `${this._dataset.name}`;
         } else {
-            this._url = `/Recipe$`;
+            this._url = `/recipe$`;
             this._title = "Rezept hinzufügen";
         }
 
@@ -77,6 +77,7 @@ export default class PageEdit extends Page {
         html = html.replace("$SERVES$", this._dataset.serves);
         html = html.replace("$CATEGORY$", this._dataset.category);
         html = html.replace("$INGREDIENTS$", this._dataset.ingredients);
+        html = html.replace("$DESCRIPTION$", this._dataset.description);
         this._mainElement.innerHTML = html;
 
         // Event Listener registrieren
@@ -84,12 +85,13 @@ export default class PageEdit extends Page {
         saveButton.addEventListener("click", () => this._saveAndExit());
 
         // Eingabefelder zur späteren Verwendung merken
-        this._nameInput = this._mainElement.querySelector("input.ame");
-        this._difficuktyInput  = this._mainElement.querySelector("input.difficulty");
+        this._nameInput = this._mainElement.querySelector("input.name");
+        this._difficultyInput  = this._mainElement.querySelector("input.difficulty");
         this._timeInput     = this._mainElement.querySelector("input.time");
         this._servesInput     = this._mainElement.querySelector("input.serves");
         this._categoryInput     = this._mainElement.querySelector("input.category");
         this._ingredientsInput     = this._mainElement.querySelector("input.ingredients");
+        this._descriptionInput = this._mainElement.querySelector("input.description")
     }
 
     /**
@@ -133,6 +135,6 @@ export default class PageEdit extends Page {
         }
 
         // Zurück zur Übersicht
-        location.hash = "#/";
+        location.hash = "#/list-recipes";
     }
 };

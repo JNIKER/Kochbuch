@@ -71,6 +71,7 @@ export default class RecipeController {
 
         res.status(201);
         res.header("Location", `${this._prefix}/${result._id}`);
+        res.status(202)
         res.sendResult(result);
 
         return next();

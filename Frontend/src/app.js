@@ -24,32 +24,18 @@ class App {
         //// TODO: Routing-Regeln anpassen und ggf. neue Methoden anlegen ////
         this.router = new Router([
             {
-                url: "^/login$",
-                show: () => this._gotoListLogin()
-            },{
-                url: "^/login/new/$",
-                show: () => this._gotoNewLogin()
-            },{
-                url: "^/login/edit/(.*)$",
-                show: matches => this._gotoEditLogin(matches[1]),
-            },
-            {
-                url: "/login.*",
-                show: () => this._gotoListLogin()
-            },
-            {
-                url: "^/Recipe$",
+                url: "^/list-recipes$",
                 show: () => this._gotoListRecipe()
             },{
-                url: "^/Recipe/new/$",
-                show: () => this._gotoNewRecipe()
-            },{
-                url: "^/Recipe/edit/(.*)$",
+                url: "^/edit-recipe/(.*)$",
                 show: matches => this._gotoEditRecipe(matches[1]),
             },
             {
-                url: "/Recipe.*",
-                show: () => this._gotoListRecipe()
+                url: "^/list-user$",
+                show: () => this._gotoListUser()
+            },{
+                url: "^/edit-user/(.*)$",
+                show: matches => this._gotoEditUser(matches[1]),
             },
         ]);
 
@@ -82,40 +68,28 @@ class App {
     /**
      * Übersichtsseite anzeigen. Wird vom Single Page Router aufgerufen.
      */
-    async _gotoListLogin() {
+    async _gotoListUser() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageList} = await import("./page-list/page-list-login.js");
 
             let page = new PageList(this);
             await page.init();
-            this._showPage(page, "list");
+            this._showPage(page, "list-user");
         } catch (ex) {
             this.showException(ex);
         }
     }
 
-    async _gotoNewLogin() {
-        try {
-            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageEdit} = await import("./page-edit/page-edit-login.js");
 
-            let page = new PageEdit(this);
-            await page.init();
-            this._showPage(page, "new");
-        } catch (ex) {
-            this.showException(ex);
-        }
-    }
-
-    async _gotoEditLogin(id) {
+    async _gotoEditUser(id) {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageEdit} = await import("./page-edit/page-edit-login.js");
 
             let page = new PageEdit(this, id);
             await page.init();
-            this._showPage(page, "edit");
+            this._showPage(page, "edit-user");
         } catch (ex) {
             this.showException(ex);
         }
@@ -128,20 +102,7 @@ class App {
 
             let page = new PageList(this);
             await page.init();
-            this._showPage(page, "list");
-        } catch (ex) {
-            this.showException(ex);
-        }
-    }
-
-    async _gotoNewRecipe() {
-        try {
-            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageEdit} = await import("./page-edit/page-edit-Recipe.js");
-
-            let page = new PageEdit(this);
-            await page.init();
-            this._showPage(page, "new");
+            this._showPage(page, "list-recipes");
         } catch (ex) {
             this.showException(ex);
         }
@@ -154,7 +115,7 @@ class App {
 
             let page = new PageEdit(this, id);
             await page.init();
-            this._showPage(page, "edit");
+            this._showPage(page, "edit-recipe");
         } catch (ex) {
             this.showException(ex);
         }

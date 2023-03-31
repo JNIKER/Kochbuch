@@ -91,16 +91,16 @@ const openApiEnforcer = await OpenApiEnforcer(openApiFile, {
         production: process.env.NODE_ENV === "production"
     },
 });
-
+////TODO WIEDER EINKOMMENTIEREN
 server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 
 // HTTP-Controller registrieren
 ////DONE  TODO: Weitere Controller-Klassen hinzufügen //// 
 new RootController(server, "/",openApiFile);
-new RecipeController(server, "/Recipe");
+new RecipeController(server, "/recipe");
 new LoginController(server, "/login");
 
-// Server tatsächlich starten
+// Server tatsächlich starte
 server.listen(config.port, config.host, function() {
     //// TODO: Konsolenausgabe anpassen (Name des Services usw.) ////
     console.log();
