@@ -24,6 +24,10 @@ class App {
         //// TODO: Routing-Regeln anpassen und ggf. neue Methoden anlegen ////
         this.router = new Router([
             {
+                url: "^/$",
+                show: () => this._gotoListUser()
+            },
+            {
                 url: "^/list-recipes$",
                 show: () => this._gotoListRecipe()
             },{
