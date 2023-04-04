@@ -42,14 +42,28 @@ html {
     }
 
     body {
-        max-width: 40em;
+        max-width: 60em;
         margin: 0 auto;
         margin-top: 2em;
         margin-bottom: 2em;
 
-        border: 1px solid #202020;
-        box-shadow: 1px 1px 3px rgba(0,0,0, 0.5);
 
+    }
+
+    header {
+        font-size: 50px;
+        display: flex;
+        justify-content: space-between;
+        position: sticky;
+        align-items: center;
+    
+    }
+    header .headline {
+        color: white;
+    }
+    header img {
+        max-width: 50%;
+        max-height: 50%;
     }
 }
 
@@ -62,6 +76,17 @@ nav {
 
     border: 0px solid #202020;
     border-bottom-width: 3px;
+    display: grid;
+    text-align: center;
+    grid-auto-flow: column;
+
+}
+nav li {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 nav a,
@@ -69,8 +94,9 @@ nav a:visited,
 nav a:hover {
     color: white;
     text-decoration: none;
+    
 
-    display: block;
+  
     padding: 1em;
 }
 
@@ -89,13 +115,13 @@ nav ul {
 
 nav li.active {
     background-color: #333333;
-    border: 0px solid rgb(33, 146, 187);
+    border: 0px solid rgb(226, 142, 15);
     border-bottom-width: 3px;
 }
 
 nav li:hover {
     background-color: #505050;
 
-    border: 0px solid rgb(103, 197, 231);
+    border: 0px solid rgb(226, 142, 15);
     border-bottom-width: 3px;
 }
