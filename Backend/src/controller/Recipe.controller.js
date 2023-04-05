@@ -103,6 +103,7 @@ export default class RecipeController {
 
         if (result) {
             this._insertHateoasLinks(result);
+            res.status(202)
             res.sendResult(result);
         } else {
             throw new RestifyError.NotFoundError("Rezept nicht gefunden");

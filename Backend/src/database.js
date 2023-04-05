@@ -33,31 +33,47 @@ class DatabaseFactory {
     async _createDemoData() {
         //// TODO: Methode anpassen, um zur eigenen App passende Demodaten anzulegen ////
         //// oder die Methode ggf. einfach löschen und ihren Aufruf oben entfernen.  ////
-        let examples = this.database.collection("example");
+        let recipes = this.database.collection("recipes");
 
-        if (await examples.estimatedDocumentCount() === 0) {
-            examples.insertMany([
+        if (await recipes.estimatedDocumentCount() === 0) {
+            recipes.insertMany([
                 
                 //Für unser Projekt nach folgender Struktur anpassen
                 {
-                   name:"",
-                   difficulty: "",
-                   time: "",
-                   serves: "",
-                   category: "",
-                   ingredients: "",
-                   description: ""
+                   name:"Kartoffelsalat",
+                   difficulty: "1",
+                   time: "2",
+                   serves: "3",
+                   category: "4",
+                   ingredients: "5",
+                   description: "6"
 
                 },
                 {
-                    name:"",
-                   difficulty: "",
-                   time: "",
-                   serves: "",
-                   category: "",
-                   ingredients: "",
-                   description: ""
-                },
+                    name:"Gurkensalat",
+                    difficulty: "1",
+                    time: "2",
+                    serves: "3",
+                    category: "4",
+                    ingredients: "5",
+                    description: "6"
+ 
+                 },
+            ]);
+        }
+
+            let user = this.database.collection("user");
+
+        if (await user.estimatedDocumentCount() === 0) {
+            user.insertMany([
+                
+                //Für unser Projekt nach folgender Struktur anpassen
+                {
+                   username: "Moritz",
+                   email: "moritz@rau.de",
+                   password: "Schnitzel123"
+
+                }
             ]);
         }
     }
