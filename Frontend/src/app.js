@@ -23,10 +23,7 @@ class App {
         // Single Page Router zur Steuerung der sichtbaren Inhalte
         //// TODO: Routing-Regeln anpassen und ggf. neue Methoden anlegen ////
         this.router = new Router([
-            {
-                url: "^/$",
-                show: () => this._gotoListUser()
-            },
+
             {
                 url: "^/list-recipes$",
                 show: () => this._gotoListRecipe()
@@ -40,6 +37,10 @@ class App {
             },{
                 url: "^/edit-user/(.*)$",
                 show: matches => this._gotoEditUser(matches[1]),
+            },
+            {
+                url: "^/(.*)$",
+                show: () => this._gotoListUser()
             },
         ]);
 

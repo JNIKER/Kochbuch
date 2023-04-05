@@ -71,7 +71,6 @@ export default class RecipeController {
 
         res.status(201);
         res.header("Location", `${this._prefix}/${result._id}`);
-        res.status(202)
         res.sendResult(result);
 
         return next();
@@ -104,6 +103,7 @@ export default class RecipeController {
 
         if (result) {
             this._insertHateoasLinks(result);
+            res.status(202)
             res.sendResult(result);
         } else {
             throw new RestifyError.NotFoundError("Rezept nicht gefunden");
