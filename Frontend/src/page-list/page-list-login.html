@@ -26,6 +26,10 @@
     main .name {
         font-size: 150%;
     }
+    main a{
+        font-size:larger;
+        color: rgb(226, 142, 15);
+    }
 
     /* AKTIONSBUTTONS */
     main .actions {
@@ -70,12 +74,15 @@
 
         <!-- Vorlage für einen Eintrag in der Liste -->
         <li class="list-entry" data-id="$ID$">
+            <a>Benutzername</a>
             <div class="username">
                 $USERNAME$
             </div>
+            <a>Email-Adresse</a>
             <div class="field email">
                 $EMAIL$
             </div>
+            <a>Passwort</a>
             <div class="field password">
                 $PASSWORD$
             </div>
