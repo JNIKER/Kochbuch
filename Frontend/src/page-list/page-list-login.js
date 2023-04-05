@@ -20,18 +20,6 @@ export default class PageList extends Page {
 
     /**
      * HTML-Inhalt und anzuzeigende Daten laden.
-     *
-     * HINWEIS: Durch die geerbte init()-Methode wird `this._mainElement` mit
-     * dem <main>-Element aus der nachgeladenen HTML-Datei versorgt. Dieses
-     * Element wird dann auch von der App-Klasse verwendet, um die Seite
-     * anzuzeigen. Hier muss daher einfach mit dem üblichen DOM-Methoden
-     * `this._mainElement` nachbearbeitet werden, um die angezeigten Inhalte
-     * zu beeinflussen.
-     *
-     * HINWEIS: In dieser Version der App wird mit dem üblichen DOM-Methoden
-     * gearbeitet, um den finalen HTML-Code der Seite zu generieren. In größeren
-     * Apps würde man ggf. eine Template Engine wie z.B. Nunjucks integrieren
-     * und den JavaScript-Code dadurch deutlich vereinfachen.
      */
     async init() {
         // HTML-Inhalt nachladen
@@ -84,7 +72,7 @@ export default class PageList extends Page {
      */
     async _askDelete(id) {
         // Sicherheitsfrage zeigen
-        let answer = confirm("Soll die ausgewählte User wirklich gelöscht werden?");
+        let answer = confirm("Soll die ausgewählte Benutzer wirklich gelöscht werden?");
         if (!answer) return;
 
         // Datensatz löschen

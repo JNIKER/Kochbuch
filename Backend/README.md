@@ -1,8 +1,6 @@
 SPA/REST-Vorlage: Backend
 =========================
 
-__TODO: Dokument überarbeiten__
-
 Inhaltsverzeichnis
 ------------------
 
@@ -17,9 +15,10 @@ Inhaltsverzeichnis
 Kurzbeschreibung
 ----------------
 
-Dies ist der backendseitige REST-Webservice der Beispiel-App. Es handelt sich
-um ein einfaches nodeJS-Projekt mit dem Webframework [Restify](http://restify.com/).
-Die Schnittstelle des Webservices ist in der Datei `src/api/openapi.yaml`
+Dieser Teil stellt das Backend der MOs RezepteAPP Verwaltung dar. Dabei wurden 2 Microservices realisiert. Der erste Microservice login beschäftigt sich mit den Benutzern der Website. Dabei kann der Administrator der Website auf die Benutzer zugreifen, diese bearbeiten, löschen sowie neue anlegen. Gleiche Anwendungsmöglichkeiten hat er im zweiten Microservice Recipe für die Rezepte der Haupt-Website.
+
+Bei den beschriebenen Microservices login und Recipe handelt es sich REST-Webservices der MOs RezepteAPP. Das Projekt ist ein einfaches nodeJS-Projekt mit dem Webframework [Restify](http://restify.com/).
+Die Schnittstelle der Webservices ist in der Datei `src/api/openapi.yaml`
 beschrieben.
 
 Start mit Docker Compose

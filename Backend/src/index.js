@@ -4,7 +4,7 @@ import restify from "restify";
 import OpenApiEnforcer from "openapi-enforcer";
 import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-middleware";
 
-////Done  TODO: Weitere Controller-Klassen importieren ////
+////importieren der Controller-Klassen////
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
 import RecipeController from "./controller/Recipe.controller.js";
@@ -33,8 +33,7 @@ await DatabaseFactory.init(config.mongodb);
  * SERVER STARTEN
  * =============================================================================*/
 const server = restify.createServer({
-    // Bei Bedarf notwendige Serverkonfiguration hier erweitern.
-    // Vgl. http://restify.com/docs/server-api/#createserver
+    
 });
 
 server.use(restify.plugins.acceptParser(server.acceptable));
@@ -78,8 +77,6 @@ server.opts("*", (req, res, next) => {
     next();
 });
 
-//Eventuell wieder in openApi ändern
-
 // Anfragen und Antworten gegen die OpenAPI-Spezifikation prüfen und dabei
 // fehlerhafte Anfragen oder Antworten mit einer Exception ablehnen.
 const openApiFile = path.relative("", path.join(__dirname, "api", "openapi.yaml"));
@@ -91,21 +88,19 @@ const openApiEnforcer = await OpenApiEnforcer(openApiFile, {
         production: process.env.NODE_ENV === "production"
     },
 });
-////TODO WIEDER EINKOMMENTIEREN
+
 server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 
-// HTTP-Controller registrieren
-////DONE  TODO: Weitere Controller-Klassen hinzufügen //// 
+// registrierte HTTP-Controller 
 new RootController(server, "/",openApiFile);
 new RecipeController(server, "/recipe");
 new LoginController(server, "/login");
 
-// Server tatsächlich starte
+// Server tatsächlich starten
 server.listen(config.port, config.host, function() {
-    //// TODO: Konsolenausgabe anpassen (Name des Services usw.) ////
     console.log();
     console.log("=============");
-    console.log("MyApp-Server");
+    console.log("MOs RezepteAPP Verwaltung");
     console.log("=============");
     console.log();
     console.log("Ausführung mit folgender Konfiguration:");
