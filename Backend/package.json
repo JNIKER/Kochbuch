@@ -1,14 +1,8 @@
 {
-  "__TODO__": [
-      "Feld 'name' anpassen mit dem richtigen Namen des Services",
-      "Feld 'descriptn' anpassen mit einer Minibeschreibung des Services",
-      "Feld 'author' anpassen mit den richtigen Autoren des Services",
-      "Den Abschnitt __TODO__ hier wieder löschen. :-)"
-  ],
-  "name": "myapp-backend",
+  "name": "MOsRezepteAPPVerwaltung-backend",
   "version": "1.0.0",
-  "description": "Meine App: Backend",
-  "author": "Erika Musterfrau",
+  "description": "MOs RezepteAPP Verwaltung: Backend der 2-Page App. Hierbei handelt es sich um eine 2-Page-App zur Verwaltung einer Kochbuch-Website. Dabei kann der Administrator der Website auf die Benutzer zugreifen, diese bearbeiten, löschen sowie neue anlegen. Gleiche Anwendungsmöglichkeiten hat er auch für die Rezepte der Haupt-Website. Diese 2-Page-App dient also rein zur Verwaltung. ",
+  "author": "Jan-Niklas Erdmann, Moritz Rau",
   "license": "CC-BY-4.0",
   "main": "src/index.js",
   "type": "module",
