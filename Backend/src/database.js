@@ -26,39 +26,35 @@ class DatabaseFactory {
     }
 
     /**
-     * Hilfsmethode zum Anlegen von Demodaten. Würde man so in einer
-     * Produktivanwendung natürlich nicht machen, aber so sehen wir
-     * wenigstens gleich ein paar Daten.
+     * Hilfsmethode zum Anlegen von Demodaten.
      */
     async _createDemoData() {
-        //// TODO: Methode anpassen, um zur eigenen App passende Demodaten anzulegen ////
-        //// oder die Methode ggf. einfach löschen und ihren Aufruf oben entfernen.  ////
+
         let recipes = this.database.collection("recipes");
 
         if (await recipes.estimatedDocumentCount() === 0) {
             recipes.insertMany([
                 
-                //Für unser Projekt nach folgender Struktur anpassen
+                //Demodaten für Rezepte
                 {
                    name:"Kartoffelsalat",
-                   difficulty: "1",
-                   time: "2",
-                   serves: "3",
-                   category: "4",
-                   ingredients: "5",
-                   description: "6"
+                   difficulty: "mittel",
+                   time: "20min",
+                   serves: "5",
+                   category: "vegetarisch",
+                   ingredients: "1 kg festkochende Kartoffeln, Salz, 2 Zwiebeln, 3 Gewürzgurken, 150 g Fleischwurst, 4 Eier",
+                   description: "Kartoffeln waschen und in Salzwasser ca. 20 Minuten garen. Unter kaltem Wasser abschrecken, pellen und in Würfel schneiden. Zwiebeln schälen und fein hacken. Gewürzgurken und Fleischwurst klein schneiden. Eier hart kochen, pellen und in Scheiben schneiden."
 
                 },
                 {
-                    name:"Gurkensalat",
-                    difficulty: "1",
-                    time: "2",
-                    serves: "3",
-                    category: "4",
-                    ingredients: "5",
-                    description: "6"
- 
-                 },
+                    name: "Gürkensalat",
+                    difficulty: "einfach",
+                    time: "15min",
+                    serves: "4",
+                    category: "vegetarisch",
+                    ingredients: "2 Gurken, 1/2 rote Zwiebel, 1 Knoblauchzehe, 2 EL Olivenöl, 2 EL Weißweinessig, 1 TL Zucker, Salz, Pfeffer, Dill",
+                    description: "Die Gurken waschen und in Scheiben schneiden. Die rote Zwiebel schälen und in dünne Ringe schneiden. Die Knoblauchzehe schälen und fein hacken. In einer Schüssel das Olivenöl, Weißweinessig, Zucker, Salz und Pfeffer vermengen. Die Gurken, Zwiebelringe und Knoblauchzehe in die Schüssel geben und alles gut vermengen. Mit gehacktem Dill garnieren und servieren."
+                    },
             ]);
         }
 
@@ -67,13 +63,19 @@ class DatabaseFactory {
         if (await user.estimatedDocumentCount() === 0) {
             user.insertMany([
                 
-                //Für unser Projekt nach folgender Struktur anpassen
+                //Demodaten für Benutzer
                 {
                    username: "Moritz",
                    email: "moritz@rau.de",
-                   password: "Schnitzel123"
+                   password: "bitteGönn30Punkte!"
 
-                }
+                },
+                {
+                    username: "Jan- Niklas",
+                    email: "jan-niklas@erdmann.de",
+                    password: "Bitte!Bitte!Bitte!"
+ 
+                 }
             ]);
         }
     }

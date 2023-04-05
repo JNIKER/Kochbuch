@@ -1,13 +1,6 @@
 /**
  * Stylesheet zur Klasse App: Hauptstylesheet der Anwendung.
- *
- * Hier sollten nur allgemeine Sachen stehen, die das Layout als Ganzes
- * betreffen. Also solche Dinge wie Schriftart, Schriftgrößen oder Farben.
- * Spezifische Angaben zur Listenübersicht oder dem Eingabeformular gehören
- * stattdessen in das jeweilige Stylesheet.
  */
-
-/**** TODO: Stylesheet überarbeiten ****/
 
 @import url('https://fonts.googleapis.com/css?family=Rubik');
 
@@ -37,7 +30,6 @@ html {
         -o-background-size: cover;
         background-size: cover;
         background-attachment: fixed;
-
         font-size: 11pt;
     }
 
@@ -46,8 +38,6 @@ html {
         margin: 0 auto;
         margin-top: 2em;
         margin-bottom: 2em;
-
-
     }
 
     header {
@@ -56,11 +46,12 @@ html {
         justify-content: space-between;
         position: sticky;
         align-items: center;
-    
     }
+
     header .headline {
         color: white;
     }
+
     header img {
         max-width: 50%;
         max-height: 50%;
@@ -70,23 +61,20 @@ html {
 /* NAVIGATION */
 nav {
     user-select: none;
-
     background-color: #404040;
     color: white;
-
     border: 0px solid #202020;
     border-bottom-width: 3px;
     display: grid;
     text-align: center;
     grid-auto-flow: column;
-
 }
+
 nav li {
     display: flex;
     align-items: center;
     margin-left: auto;
     margin-right: auto;
-
 }
 
 nav a,
@@ -94,9 +82,6 @@ nav a:visited,
 nav a:hover {
     color: white;
     text-decoration: none;
-    
-
-  
     padding: 1em;
 }
 
@@ -109,7 +94,6 @@ nav ul {
     margin: 0;
     padding: 0;
     margin-bottom: -3px;
-
     display: flex;
 }
 
@@ -121,7 +105,6 @@ nav li.active {
 
 nav li:hover {
     background-color: #505050;
-
     border: 0px solid rgb(226, 142, 15);
     border-bottom-width: 3px;
 }

@@ -14,12 +14,7 @@ export default class Page {
      * das App-Objekt zu übergeben. Die erbenden Klassen sollten daher am
      * besten auch einen Konstruktor besitzen, dem das App-Objekt übergeben
      * wird.
-     *
-     * Der Parameter für den HTML-String sollte hingegen von der erbenden
-     * Klasse versorgt werden, wobei das HTML-Template in der Regel (da wir
-     * hier einen Bundler nutzen) aus einer separaten HTML-Datei importiert
-     * werden sollte.
-     *
+     * 
      * @param {App} app - Zentralles App-Objekt
      * @param {string} htmlString - Inhalt des HTML-Templates
      */

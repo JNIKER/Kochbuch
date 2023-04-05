@@ -21,9 +21,8 @@ class App {
         this.backend = new Backend();
 
         // Single Page Router zur Steuerung der sichtbaren Inhalte
-        //// TODO: Routing-Regeln anpassen und ggf. neue Methoden anlegen ////
-        this.router = new Router([
 
+        this.router = new Router([
             {
                 url: "^/list-recipes$",
                 show: () => this._gotoListRecipe()
@@ -68,11 +67,11 @@ class App {
         }
     }
 
-    
-
     /**
      * Übersichtsseite anzeigen. Wird vom Single Page Router aufgerufen.
      */
+
+    // Methode, um auf die Listenansiht von Benutzern zu navigieren
     async _gotoListUser() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
@@ -86,7 +85,7 @@ class App {
         }
     }
 
-
+    // Methode, um auf die Bearbeitungsansicht von Benutzern zu navigieren
     async _gotoEditUser(id) {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
@@ -100,6 +99,7 @@ class App {
         }
     }
 
+    // Methode, um auf die Listenansicht von Rezepten zu navigieren
     async _gotoListRecipe() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
@@ -112,7 +112,7 @@ class App {
             this.showException(ex);
         }
     }
-
+    // Methode, um auf die Bearbeitungsansicht von Rezepten zu navigieren
     async _gotoEditRecipe(id) {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports

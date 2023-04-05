@@ -4,7 +4,7 @@ import Page from "../page.js";
 import HtmlTemplate from "./page-edit-login.html";
 
 /**
- * Klasse PageEdit: Stellt die Seite zum Anlegen oder Bearbeiten einer Benutzer
+ * Klasse PageEdit: Stellt die Seite zum Anlegen oder Bearbeiten eines Benutzers
  * zur Verfügung.
  */
 export default class PageEdit extends Page {
@@ -34,18 +34,6 @@ export default class PageEdit extends Page {
 
     /**
      * HTML-Inhalt und anzuzeigende Daten laden.
-     *
-     * HINWEIS: Durch die geerbte init()-Methode wird `this._mainElement` mit
-     * dem <main>-Element aus der nachgeladenen HTML-Datei versorgt. Dieses
-     * Element wird dann auch von der App-Klasse verwendet, um die Seite
-     * anzuzeigen. Hier muss daher einfach mit dem üblichen DOM-Methoden
-     * `this._mainElement` nachbearbeitet werden, um die angezeigten Inhalte
-     * zu beeinflussen.
-     *
-     * HINWEIS: In dieser Version der App wird mit dem üblichen DOM-Methoden
-     * gearbeitet, um den finalen HTML-Code der Seite zu generieren. In größeren
-     * Apps würde man ggf. eine Template Engine wie z.B. Nunjucks integrieren
-     * und den JavaScript-Code dadurch deutlich vereinfachen.
      */
     async init() {
         // HTML-Inhalt nachladen
@@ -61,7 +49,6 @@ export default class PageEdit extends Page {
             this._title = "Benutzer hinzufügen";
         }
 
-        // Platzhalter im HTML-Code ersetzen
         let html = this._mainElement.innerHTML;
         html = html.replace("$USERNAME$", this._dataset.username);
         html = html.replace("$EMAIL$", this._dataset.email);
@@ -71,8 +58,6 @@ export default class PageEdit extends Page {
         // Event Listener registrieren
         let saveButton = this._mainElement.querySelector(".action.save");
         saveButton.addEventListener("click", () => this._saveAndExit());
-
-        // Eingabefelder zur späteren Verwendung merken
         
         this._usernameInput  = this._mainElement.querySelector("input.username");
         this._emailInput     = this._mainElement.querySelector("input.email");
@@ -89,7 +74,8 @@ export default class PageEdit extends Page {
         this._dataset.username  = this._usernameInput.value.trim();
         this._dataset.email      = this._emailInput.value.trim();
         this._dataset.password      = this._passwordInput.value.trim();
-
+        
+        // benötigte Eingaben zum Speichern eines neuen Benutzers
         if (!this._dataset.username) {
             alert("Geben Sie erst einen Usernamen ein.");
             return;
