@@ -61,11 +61,11 @@ export default class PageEdit extends Page {
 
         // Bearbeiteten Datensatz laden
         if (this._editId) {
-            this._url = `^/recipe/edit/(.*)${this._editId}`;
+            this._url = `/recipe/${this._editId}`;
             this._dataset = await this._app.backend.fetch("GET", this._url);
             this._title = `${this._dataset.name}`;
         } else {
-            this._url = `/recipe$`;
+            this._url = `/recipe`;
             this._title = "Rezept hinzufügen";
         }
 
